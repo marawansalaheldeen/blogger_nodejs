@@ -1,0 +1,51 @@
+<% include ../partials/header %>	
+	<div class="row" style="margin-left:10px;margin-right:10px;">
+		
+		<div class="col s14">
+			<div>
+			<a href="/event/add" style="margin-top:21px" class="btn btn-success btn-lg">Add New Event</a>
+			</div>
+		</div>
+	</div>
+	<br>
+			
+			
+			
+	<div class="">	
+	<div class="col s12">
+		<% if(items.length > 0) { %>
+		<table class="table">	
+		<thead>
+			<tr>
+			    <th style="width:1%;text-align:center">ID</th>
+			    <th style="width:10%">Name</th>	
+			    <th style="width:10%">Start Date</th>
+			    <th style="width:10%">End Date</th>		
+				<th style="width:10%">Description</th>
+				<th style="width:10%">Location</th>
+				<th solspan="2" style="width:20%;text-align:center">Actions</th>
+			</tr>
+		</thead>
+		<tbody>	
+				<% items.forEach(function(item,index) { %>
+					<tr>
+					<td style="width:1%;text-align:center"><%= index + 1 %></td>
+					<td style="width:10%"><%= item.e_name%></td>
+					<td style="width:10%"><%= item.e_start_date %></td>
+					<td style="width:10%"><%= item.e_end_date %></td>
+					<td style="width:10%"><%= item.e_desc %></td>
+					<td style="width:10%"><%= item.location %></td>
+					<td solspan="2" style="width:20%;text-align:center">
+						<a href="/event/edit/<%= item.e_id%>" class="btn btn-success">Edit</a>
+						<a href="/event/delete/<%= item.e_id%>" class="btn btn-danger">Delete</a>
+					</td>	
+					</tr>
+					<% }); %>
+				</tbody>	
+				</table>
+					<% }else{ %>
+					<!--<p><strong>No records yet......</strong></p>-->
+					<% } %>
+				</div>
+				</div>	
+							

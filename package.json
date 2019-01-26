@@ -1,0 +1,35 @@
+{
+  "name": "Events",
+  "version": "0.0.0",
+  "description": "Events app",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^3.0.3",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.2.1",
+    "cookie-parser": "^1.4.3",
+    "dateformat": "^3.0.3",
+    "debug": "^4.1.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-mysql-session": "^2.1.0",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "hbs": "^4.0.1",
+    "jquery": "^3.3.1",
+    "json-stringify": "^1.0.0",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.9",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "popper.js": "^1.14.6",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marawan",
+  "license": "ISC"
+}

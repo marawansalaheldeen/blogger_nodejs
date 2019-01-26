@@ -1,0 +1,58 @@
+<html>
+<head>
+
+	<title> <%= siteTitle %> - <%= pageTitle %> </title>
+		
+	<% include ../partials/head %>
+	
+</head>
+
+<body style="background-color:#DCDCDC ">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="<%=basurl%>/newuser" style="color:cyan"><%= pageTitle %></a>
+    
+    <form class="form-inline my-2 my-lg-0">
+	 <h3 style="color:#DD58C7;margin-left:490px">Creating New User</h3>
+    </form>
+  </div>
+</nav>
+
+		
+		<% if (items){ %>
+			<% for(var i=0; i<items.length;i++){ %>
+					 
+					<center><p class="alert alert-danger"> <%= items[i].msg %></p></center>
+			<% } %>
+					<center><h3>Try Again.....</h3></center>
+		<% } %>
+		
+		
+<center>
+<form action="<%=basurl%>/newuser" method="post" style="margin-top:70px;margin-left:70px">
+  <div>
+    <label for="u_name">User name</label><br>
+    <input name="u_name" value="" type="text" style="padding-left:120px;border-radius: 7%;"  placeholder="Pick a user-name">
+    
+  </div><br>	
+  <div>
+    <label for="u_email">Email address</label><br>
+    <input name="u_email" type="email" style="padding-left:120px;border-radius: 7%;" value="" placeholder="Enter email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>			
+  </div><br>
+  <div class="form-group">
+    <label for="u_pass">Password</label><br>
+    <input name="u_pass" type="password" value="" style="padding-left:120px;border-radius: 7%;"  placeholder="Enter password">    
+  </div><br>
+  <div class="form-group">
+    <label for="c_pass">Confirm Password</label><br>
+    <input name="c_pass" value="" type="password" style="padding-left:120px;border-radius: 7%;"  placeholder="Re-Enter password">
+  </div><br>
+  
+  <button name="submit" value="save user" type="submit" class="btn btn-primary">Submit</button>
+</form>
+</center>
+</body>	
+</html>
