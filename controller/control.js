@@ -22,9 +22,7 @@ const connection = mysql.createConnection({
 	port:'3306'
 	});
 
-
-
-
+module.exports.connection;
 
 module.exports = function(app){
 //routes

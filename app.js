@@ -4,10 +4,11 @@ var mysql = require('mysql');
 var expressValidator = require("express-validator");
 var session = require('express-session');
 var passport = require('passport');
-
+var stringify = require('json-stringify');
 var MySQLStore = require('express-mysql-session')(session);
 var LocalStrategy = require('passport-local').Strategy;
 var bodyparser = require('body-parser');
+var bcrypt = require('bcrypt');
 var app = express();
 
 
@@ -23,7 +24,7 @@ app.use('/css',express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use(expressValidator());
 app.set('view engine','ejs');
 
-
+var bcrypt = require('bcrypt');
 
 
 
@@ -50,10 +51,41 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+const connection = mysql.createConnection({
+	host:'Localhost',
+	user:'root',
+	password:'test',
+	database:'mydb',
+	port:'3306'
+	});
+
+
 passport.use(new LocalStrategy(function(username, password, done) {
-	
-	return done(null,false);
-	}
+	console.log(username);
+	console.log(password);	
+	connection.query("SELECT u_id,u_pass FROM users WHERE u_name = ? ",[username],function(err,results){
+		console.log(results);
+		if(err) {
+			 return done(err);
+			};
+		if(results.length === 0){
+			return done(null,false);
+			};
+			
+		const hash = results[0].u_pass;
+		const uid = results[0].u_id;
+		console.log(uid);
+		console.log(hash);
+		bcrypt.compare(password,hash,function(err,response){
+			if(response === true){
+					return done(null,{user_id:results[0].user_id});
+			}else{
+					return done(null,false);
+			}
+		});
+		
+	});
+  }
 ));
 //Database connection
 
