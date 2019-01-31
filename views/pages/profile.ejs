@@ -36,8 +36,10 @@
 					<td style="width:10%"><%= item.e_desc %></td>
 					<td style="width:10%"><%= item.location %></td>
 					<td solspan="2" style="width:20%;text-align:center">
+					
 						<a href="/event/edit/<%= item.e_id%>" class="btn btn-success">Edit</a>
 						<a href="/event/delete/<%= item.e_id%>" class="btn btn-danger">Delete</a>
+					
 					</td>	
 					</tr>
 					<% }); %>

@@ -28,25 +28,16 @@ module.exports = function(app){
 
 app.get('/',authenticationMiddleware,function(req,res){
 
-		connection.query("SELECT * FROM e_events ",function(err,result){
-			
-			
-			
-			connection.query("SELECT u_id FROM e_events ",function(err,results){
-				var eveuid = results;
-				var userrid = req.user.u_id;
-				console.log(eveuid)	;
-				console.log(userrid)	;
-			
+			connection.query("SELECT * FROM e_events ",function(err,result){
+				
+			var uid = req.user.u_id;	
 			res.render('pages/index',{
 			siteTitle : siteTitle,
 			pageTitle : "Event-list",
 			basurl	  : baseurl,
-			eveuid	  : eveuid,
-			userrid   : userrid,
+			userrid   : uid,
 			items     : result
 			});
-		});
 	});		
 });
 app.get('/profile',authenticationMiddleware,function(req,res){
