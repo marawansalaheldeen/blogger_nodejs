@@ -5,10 +5,9 @@ var dateformat = require('dateformat');
 var urlencodedparser = bodyparser.urlencoded({extended:true});
 var expressvalidator = require('express-validator');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var now = new Date();
 var bcrypt = require('bcrypt');
-const saltRounds = 10;
+const saltRounds = 10;  //var LocalStrategy = require('passport-local').Strategy;
+var now = new Date();
 
 
 
@@ -26,34 +25,44 @@ module.exports.connection;
 
 module.exports = function(app){
 //routes
+
 app.get('/',authenticationMiddleware,function(req,res){
+
 		connection.query("SELECT * FROM e_events ",function(err,result){
 			
-		
+			
+			
+			connection.query("SELECT u_id FROM e_events ",function(err,results){
+				var eveuid = results;
+				var userrid = req.user.u_id;
+				console.log(eveuid)	;
+				console.log(userrid)	;
+			
 			res.render('pages/index',{
+			siteTitle : siteTitle,
+			pageTitle : "Event-list",
+			basurl	  : baseurl,
+			eveuid	  : eveuid,
+			userrid   : userrid,
+			items     : result
+			});
+		});
+	});		
+});
+app.get('/profile',authenticationMiddleware,function(req,res){
+			
+			connection.query("SELECT * FROM e_events WHERE u_id = ?",[req.user.u_id],function(err,result){
+			res.render('pages/profile',{
 			siteTitle : siteTitle,
 			pageTitle : "Event-list",
 			basurl	  : baseurl,
 			items     : result
 			});
-		});
-		console.log(req.user);
-		console.log(req.isAuthenticated());
-		
-});
-app.get('/profile',authenticationMiddleware,function(req,res){
-	
-			res.render('pages/profile',{
-			siteTitle : siteTitle,
-			pageTitle : "Eventus",
-			basurl	  : baseurl,
-			items     : ''
 			});
-	
 });
 app.get('/loginpage/',function(req,res){
-	
-		
+		req.logout();
+		req.session.destroy();
 		res.render('pages/login',{
 			siteTitle : siteTitle,
 			pageTitle : "Eventus",
@@ -62,13 +71,10 @@ app.get('/loginpage/',function(req,res){
 			});
 	
 });
-  
-
 app.post('/loginpage/',passport.authenticate('local', {
 	 successRedirect: '/profile',	
 	 failureRedirect: '/loginpage'
-	  
-}));
+	}));  
 
 app.get('/newuser/',function(req,res){
 		res.render('pages/newuser',{
@@ -158,7 +164,8 @@ app.post('/event/add/',urlencodedparser,function(req,res){
 				e_start_date:startdate,
 				e_end_date:enddate,
 				e_desc:desc,
-				location:loc
+				location:loc,
+				u_id: req.user.u_id
 			}
 		connection.query("INSERT INTO e_events SET ? ",sql,function(err,result){
 				console.log(result);
@@ -206,32 +213,34 @@ app.post('/event/edit/:event_id',urlencodedparser,function(req,res){
 	});
 
 app.get('/event/delete/:event_id',function(req,res){
+
 		
 		connection.query("DELETE FROM e_events WHERE e_id='"+req.params.event_id+"'",function(err,result){
 				if(result.affectedRows){
 						res.redirect(baseurl)
 					}
 				
-			
 			});
 });
 
-passport.serializeUser(function(user_id,done){
-	done(null,user_id);
+passport.serializeUser(function art(user,done){
+			var userid = user.u_id;
+			console.log(userid);
+			done(null,user);	
+
 });
-passport.deserializeUser(function(user_id,done){
-	done(null,user_id);
+
+passport.deserializeUser(function(user,done){
+	done(null,user);
 });
 
 function authenticationMiddleware(req,res,next){
 			if(req.isAuthenticated()){
-			
+					
 					next();
 			}else{
 					res.redirect('/loginpage');
 					
-			} 
-					
-		
-		};
+			}; 	
+	};	
 };

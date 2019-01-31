@@ -24,8 +24,6 @@ app.use('/css',express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use(expressValidator());
 app.set('view engine','ejs');
 
-var bcrypt = require('bcrypt');
-
 
 
 var options = {
@@ -73,12 +71,12 @@ passport.use(new LocalStrategy(function(username, password, done) {
 			};
 			
 		const hash = results[0].u_pass;
-		const uid = results[0].u_id;
-		console.log(uid);
+		var uid = results[0].u_id;
+		
 		console.log(hash);
 		bcrypt.compare(password,hash,function(err,response){
 			if(response === true){
-					return done(null,{user_id:results[0].user_id});
+					return done(null,{u_id:results[0].u_id});
 			}else{
 					return done(null,false);
 			}
@@ -87,10 +85,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
 	});
   }
 ));
-//Database connection
-
-
-
 
  
 //defroute
