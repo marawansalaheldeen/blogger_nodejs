@@ -1,9 +1,46 @@
-<% include ../partials/header %>	
+<html>
+<head>
+
+	<title> <%= siteTitle %> - <%= pageTitle %> </title>
+		
+	<% include ../partials/head %>
+	
+</head>
+
+<body style="background-color:#DCDCDC ">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="<%=basurl%>" style="color:cyan"><%= pageTitle %></a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="<%=basurl%>">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">About</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="<%=basurl%>/profile/<%= username%>">profile</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="loginpage">logout</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>	
+
 	<div class="row" style="margin-left:10px;margin-right:10px;">
 		
 		<div class="col s14">
 			<div>
-			<a href="/event/add" style="margin-top:21px" class="btn btn-success btn-lg">Add New Event</a>
+			<a href="/event/add" style="margin-top:21px" class="btn btn-success btn-lg">Add New Event</a> <center><h2><strong>All Events</strong></h2>
 			</div>
 		</div>
 	</div>
@@ -36,9 +73,10 @@
 					<td style="width:10%"><%= item.e_desc %></td>
 					<td style="width:10%"><%= item.location %></td>
 					<td solspan="2" style="width:20%;text-align:center">
-					<% if (item.u_id==userrid) { %>							
+					<% if (item.u_id==userid) { %>							
 						<a href="/event/edit/<%= item.e_id%>" class="btn btn-success">Edit</a>
 						<a href="/event/delete/<%= item.e_id%>" class="btn btn-danger">Delete</a>
+						
 					<% } %>			
 					</td>	
 					</tr>
@@ -52,4 +90,5 @@
 				</div>
 					
 									
-							
+</body>	
+</html>							

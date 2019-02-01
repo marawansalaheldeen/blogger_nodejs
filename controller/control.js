@@ -11,7 +11,7 @@ var now = new Date();
 
 
 
-const siteTitle = "Event APP";
+const siteTitle = "Swastika";
 const baseurl = "http://localhost:3000";
 const connection = mysql.createConnection({
 	host:'Localhost',
@@ -20,57 +20,72 @@ const connection = mysql.createConnection({
 	database:'mydb',
 	port:'3306'
 	});
+	
 
 module.exports.connection;
 
 module.exports = function(app){
 //routes
 
+
 app.get('/',authenticationMiddleware,function(req,res){
 
 			connection.query("SELECT * FROM e_events ",function(err,result){
+				connection.query("SELECT u_name FROM users WHERE u_id = ?",[req.user.u_id],function(err,results){
+						var resu = results[0].u_name;
+						console.log(resu);
 				
-			var uid = req.user.u_id;	
 			res.render('pages/index',{
 			siteTitle : siteTitle,
-			pageTitle : "Event-list",
+			pageTitle : "Swastika",
 			basurl	  : baseurl,
-			userrid   : uid,
+			username  : resu,
+			userid    : req.user.u_id,
 			items     : result
 			});
+		});	
 	});		
 });
-app.get('/profile',authenticationMiddleware,function(req,res){
+
+app.get('/profile/:username',authenticationMiddleware,function(req,res){
 			
+				
 			connection.query("SELECT * FROM e_events WHERE u_id = ?",[req.user.u_id],function(err,result){
+				
 			res.render('pages/profile',{
 			siteTitle : siteTitle,
-			pageTitle : "Event-list",
+			pageTitle : "Swastika",
 			basurl	  : baseurl,
 			items     : result
 			});
 			});
 });
 app.get('/loginpage/',function(req,res){
+		
 		req.logout();
 		req.session.destroy();
 		res.render('pages/login',{
 			siteTitle : siteTitle,
-			pageTitle : "Eventus",
+			pageTitle : "Swastika",
 			basurl	  : baseurl,
 			items     : ''
 			});
 	
 });
-app.post('/loginpage/',passport.authenticate('local', {
-	 successRedirect: '/profile',	
-	 failureRedirect: '/loginpage'
-	}));  
+
+
+
+
+app.post('/loginpage/',passport.authenticate('local',{	
+			successRedirect: '/',
+			failureRedirect: '/loginpage'
+}));  
+	
 
 app.get('/newuser/',function(req,res){
 		res.render('pages/newuser',{
 			siteTitle : siteTitle,
-			pageTitle : "Eventus",
+			pageTitle : "Swastika",
 			basurl	  : baseurl,
 			items     : ''
 			
@@ -98,7 +113,7 @@ app.post('/newuser/',urlencodedparser,function(req,res){
 			
 			res.render('pages/newuser',{
 			siteTitle : siteTitle,
-			pageTitle : "Eventus......registration error",
+			pageTitle : "Swastika......registration error",
 			basurl	  : baseurl,
 			items	  : errors
 		
@@ -136,7 +151,7 @@ app.post('/newuser/',urlencodedparser,function(req,res){
 app.get('/event/add/',function(req,res){
 			res.render('pages/add-eve',{
 			siteTitle : siteTitle,
-			pageTitle : "Event-list",
+			pageTitle : "Swastika",
 			basurl	  : baseurl,
 			items     : ''
 			});
