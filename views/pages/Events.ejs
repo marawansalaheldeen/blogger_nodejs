@@ -1,17 +1,17 @@
-<% include ../partials/header %>	
-		<div class="row" style="margin-left:10px;margin-right:10px;">
+<html>
+<head>
+
+	<title> <%= siteTitle %> - <%= pageTitle %> </title>
 		
-		<div class="col s14">
-			<div>
-			<a href="/event/add" style="margin-top:21px" class="btn btn-success btn-lg">Add New Event</a> <a href="#" style="margin-left:1000px;margin-top:21px" class="btn btn-success btn-lg">My Account</a>
-			<center><h2><strong>Your Events</strong></h2>
-			</div>
-		</div>
-	</div>
+	<% include ../partials/head %>
+	
+</head>
+
+<body style="background-color:#DCDCDC ">
+	<% include ../partials/header %>			
+	<br>		
+	<center><h1>All Events</h1></center>
 	<br>
-			
-			
-			
 	<div class="">	
 	<div class="col s12">
 		<% if(items.length > 0) { %>
@@ -37,10 +37,11 @@
 					<td style="width:10%"><%= item.e_desc %></td>
 					<td style="width:10%"><%= item.location %></td>
 					<td solspan="2" style="width:20%;text-align:center">
-					
+					<% if (item.u_id==userid) { %>							
 						<a href="/event/edit/<%= item.e_id%>" class="btn btn-success">Edit</a>
 						<a href="/event/delete/<%= item.e_id%>" class="btn btn-danger">Delete</a>
-					
+						
+					<% } %>			
 					</td>	
 					</tr>
 					<% }); %>
@@ -50,5 +51,8 @@
 					<!--<p><strong>No records yet......</strong></p>-->
 					<% } %>
 				</div>
-				</div>	
-							
+				</div>
+					
+									
+</body>	
+</html>							

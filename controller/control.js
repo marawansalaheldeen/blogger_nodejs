@@ -1,5 +1,5 @@
 var stringify = require('json-stringify');
-var mysql = require('mysql');
+
 var bodyparser = require('body-parser');
 var dateformat = require('dateformat');
 var urlencodedparser = bodyparser.urlencoded({extended:true});
@@ -11,43 +11,51 @@ var now = new Date();
 
 
 
-const siteTitle = "Swastika";
-const baseurl = "http://localhost:3000";
-const connection = mysql.createConnection({
-	host:'Localhost',
-	user:'root',
-	password:'test',
-	database:'mydb',
-	port:'3306'
-	});
+var model = require('../models/dbcon');
+
+var connection = model.connection;
+var baseurl = model.baseurl;
+var brand = model.brand;
+var siteTitle = model.siteTitle;
 	
-
-module.exports.connection;
-
 module.exports = function(app){
-//routes
 
-
+//Home page
 app.get('/',authenticationMiddleware,function(req,res){
-
-			connection.query("SELECT * FROM e_events ",function(err,result){
-				connection.query("SELECT u_name FROM users WHERE u_id = ?",[req.user.u_id],function(err,results){
-						var resu = results[0].u_name;
-						console.log(resu);
-				
+		connection.query("SELECT u_name FROM users WHERE u_id = ?",[req.user.u_id],function(err,results){
+			var resu = results[0].u_name;
+			console.log(resu);
+			
 			res.render('pages/index',{
 			siteTitle : siteTitle,
-			pageTitle : "Swastika",
+			pageTitle : brand,
 			basurl	  : baseurl,
-			username  : resu,
-			userid    : req.user.u_id,
-			items     : result
+			username  :	resu
 			});
-		});	
-	});		
+		});			
 });
-
-app.get('/profile/:username',authenticationMiddleware,function(req,res){
+app.get('/blogs',authenticationMiddleware,function(req,res){
+			
+			res.render('pages/blogs',{
+			siteTitle : siteTitle,
+			pageTitle : brand,
+			basurl	  : baseurl,
+			userid    : req.user.u_id
+			})
+})
+//Events
+app.get('/Events',authenticationMiddleware,function(req,res){
+	connection.query("SELECT * FROM e_events ",function(err,result){				
+			res.render('pages/Events',{
+			siteTitle : siteTitle,
+			pageTitle : brand,
+			basurl	  : baseurl,
+			userid    : req.user.u_id,	
+			items     : result
+			});	
+	});	
+});
+app.get('/profil',authenticationMiddleware,function(req,res){
 			
 				
 			connection.query("SELECT * FROM e_events WHERE u_id = ?",[req.user.u_id],function(err,result){
@@ -60,6 +68,7 @@ app.get('/profile/:username',authenticationMiddleware,function(req,res){
 			});
 			});
 });
+//Logining in
 app.get('/loginpage/',function(req,res){
 		
 		req.logout();
@@ -81,7 +90,7 @@ app.post('/loginpage/',passport.authenticate('local',{
 			failureRedirect: '/loginpage'
 }));  
 	
-
+//Creating new user
 app.get('/newuser/',function(req,res){
 		res.render('pages/newuser',{
 			siteTitle : siteTitle,
@@ -147,7 +156,7 @@ app.post('/newuser/',urlencodedparser,function(req,res){
 		};
 });	
 
-//crud	
+//Add-Event
 app.get('/event/add/',function(req,res){
 			res.render('pages/add-eve',{
 			siteTitle : siteTitle,
@@ -179,7 +188,7 @@ app.post('/event/add/',urlencodedparser,function(req,res){
 
 		});
 });
-
+//Edit-Event
 app.get('/event/edit/:event_id',function(req,res){
 	connection.query("SELECT * FROM e_events WHERE e_id='"+req.params.event_id+"'",function(err,result){
 		result[0].e_start_date = dateformat(result[0].e_start_date,"yyyy-mm-dd");
@@ -217,7 +226,7 @@ app.post('/event/edit/:event_id',urlencodedparser,function(req,res){
 	
 	
 	});
-
+//Delete-Event
 app.get('/event/delete/:event_id',function(req,res){
 
 		
@@ -228,7 +237,7 @@ app.get('/event/delete/:event_id',function(req,res){
 				
 			});
 });
-
+//Authentication
 passport.serializeUser(function art(user,done){
 			var userid = user.u_id;
 			console.log(userid);
