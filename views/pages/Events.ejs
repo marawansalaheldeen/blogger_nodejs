@@ -9,8 +9,10 @@
 
 <body style="background-color:#DCDCDC ">
 	<% include ../partials/header %>			
-	<br>		
-	<center><h1>All Events</h1></center>
+		
+	<div class="col s14">	
+			<a href="/event/add" style="margin-top:21px" class="btn btn-success btn-lg">Add New Event</a> <center><h1>All Events</h1></center>
+	</div>		
 	<br>
 	<div class="">	
 	<div class="col s12">
@@ -48,7 +50,7 @@
 				</tbody>	
 				</table>
 					<% }else{ %>
-					<!--<p><strong>No records yet......</strong></p>-->
+					<strong>No records yet......</strong></p>
 					<% } %>
 				</div>
 				</div>

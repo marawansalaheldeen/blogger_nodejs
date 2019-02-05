@@ -35,14 +35,39 @@ app.get('/',authenticationMiddleware,function(req,res){
 		});			
 });
 app.get('/blogs',authenticationMiddleware,function(req,res){
-			
+			connection.query("SELECT * FROM blogs ",function(err,result){
 			res.render('pages/blogs',{
 			siteTitle : siteTitle,
 			pageTitle : brand,
 			basurl	  : baseurl,
-			userid    : req.user.u_id
-			})
-})
+			items     : result
+			});
+    });			
+});
+app.post('/blogs',urlencodedparser,function(req,res){
+
+		connection.query("SELECT u_name FROM users WHERE u_id = ?",[req.user.u_id],function(err,result){
+			var username = result[0].u_name;
+		    var b_name = req.body.blog_name;
+		    var b_body = req.body.blog_body;
+			var sql = {
+				B_name:b_name,
+				B_body:b_body,
+				u_name:username,
+				u_id: req.user.u_id
+			}
+			console.log(sql);
+		connection.query("INSERT INTO  blogs SET ? ",sql,function(err,result){
+				console.log(result);
+				res.redirect(baseurl+"/blogs");
+			});
+	});
+});
+
+
+
+
+
 //Events
 app.get('/Events',authenticationMiddleware,function(req,res){
 	connection.query("SELECT * FROM e_events ",function(err,result){				
@@ -184,7 +209,7 @@ app.post('/event/add/',urlencodedparser,function(req,res){
 			}
 		connection.query("INSERT INTO e_events SET ? ",sql,function(err,result){
 				console.log(result);
-				res.redirect(baseurl);
+				res.redirect(baseurl+"/Events");
 
 		});
 });
@@ -232,7 +257,7 @@ app.get('/event/delete/:event_id',function(req,res){
 		
 		connection.query("DELETE FROM e_events WHERE e_id='"+req.params.event_id+"'",function(err,result){
 				if(result.affectedRows){
-						res.redirect(baseurl)
+						res.redirect(baseurl+"/Events");
 					}
 				
 			});
