@@ -10,7 +10,6 @@ var bodyparser = require('body-parser');
 var bcrypt = require('bcrypt');
 var flash = require('connect-flash');
 var app = express();
-
 var con = require('./models/dbcon');
 var connection = con.connection;
 var options = con.options;
@@ -26,6 +25,7 @@ app.use('/css',express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use(expressValidator());
 app.use(flash());
 app.set('view engine','ejs');
+
 
 
 

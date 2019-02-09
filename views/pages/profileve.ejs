@@ -1,20 +1,10 @@
-<html>
-<head>
+<% include ../partials/header %>	
 
-	<title> <%= siteTitle %> - <%= pageTitle %> </title>
-		
-	<% include ../partials/head %>
+	<center><h1>All My Events</h1></center>		
+	<a id="my_Eve" href="<%=basurl%>/profil/MyEvents" style="margin-left:90px">My Events</a>
+	<a id="my_Blo" href="<%=basurl%>/profil/MyBlogs" style="margin-left:1000px">My Blogs</a>
+	<div class=""><br>
 	
-</head>
-
-<body style="background-color:#DCDCDC ">
-	<% include ../partials/header %>			
-		
-	<div class="col s14">	
-			<a href="/event/add" style="margin-top:21px" class="btn btn-success btn-lg">Add New Event</a> <center><h1>All Events</h1></center>
-	</div>		
-	<br>
-	<div class="">	
 	<div class="col s12">
 		<% if(items.length > 0) { %>
 		<table class="table">	
@@ -39,22 +29,17 @@
 					<td style="width:10%"><%= item.e_desc %></td>
 					<td style="width:10%"><%= item.location %></td>
 					<td solspan="2" style="width:20%;text-align:center">
-					<% if (item.u_id==userid) { %>							
+					
 						<a href="/event/edit/<%= item.e_id%>" class="btn btn-success">Edit</a>
 						<a href="/event/delete/<%= item.e_id%>" class="btn btn-danger">Delete</a>
-						
-					<% } %>			
+					
 					</td>	
 					</tr>
 					<% }); %>
 				</tbody>	
 				</table>
 					<% }else{ %>
-					<center><h2><strong>No records yet......</strong></h2></center>
+					<!--<p><strong>No records yet......</strong></p>-->
 					<% } %>
 				</div>
-				</div>
-					
-									
-</body>	
-</html>							
+				</div>	

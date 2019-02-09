@@ -40,6 +40,7 @@ app.get('/blogs',authenticationMiddleware,function(req,res){
 			siteTitle : siteTitle,
 			pageTitle : brand,
 			basurl	  : baseurl,
+			userid    : req.user.u_id,	
 			items     : result
 			});
     });			
@@ -81,16 +82,36 @@ app.get('/Events',authenticationMiddleware,function(req,res){
 	});	
 });
 app.get('/profil',authenticationMiddleware,function(req,res){
-			
 				
-			connection.query("SELECT * FROM e_events WHERE u_id = ?",[req.user.u_id],function(err,result){
-				
+			connection.query("SELECT * FROM users WHERE u_id = ?",[req.user.u_id],function(err,result){
 			res.render('pages/profile',{
 			siteTitle : siteTitle,
 			pageTitle : "Swastika",
 			basurl	  : baseurl,
 			items     : result
 			});
+			});
+});
+//app.get('/profil/:userid',function(req,res){
+//			console.log("theuserid"+req.params.userid);
+//			res.redirect(baseurl+"/loginpage");
+//			connection.query("DELETE FROM users WHERE u_id= 57",function(err,result){
+//					console.log(result);
+//					if(result.affectedRows>0){
+//						res.redirect(baseurl+"/loginpage");
+//						console.log('account deleted succesffuly');
+//					}
+//			});
+//});
+app.get('/profil/MyEvents',function(req,res){
+			connection.query("SELECT * FROM e_events WHERE u_id = ? ",[req.user.u_id],function(err,result){				
+					
+					res.render('pages/profileve',{
+					siteTitle : siteTitle,
+					pageTitle : "Swastika",
+					basurl	  : baseurl,
+					items     : result
+					});
 			});
 });
 //Logining in
@@ -106,9 +127,6 @@ app.get('/loginpage/',function(req,res){
 			});
 	
 });
-
-
-
 
 app.post('/loginpage/',passport.authenticate('local',{	
 			successRedirect: '/',
@@ -256,6 +274,7 @@ app.get('/event/delete/:event_id',function(req,res){
 
 		
 		connection.query("DELETE FROM e_events WHERE e_id='"+req.params.event_id+"'",function(err,result){
+				console.log(result);
 				if(result.affectedRows){
 						res.redirect(baseurl+"/Events");
 					}

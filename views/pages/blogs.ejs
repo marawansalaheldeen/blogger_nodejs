@@ -25,16 +25,20 @@
 <% if(items.length > 0) { %>
 	<% items.forEach(function(item,index) { %>
 	<center>	
-	<div style="height:300px;width:48%;background-color:#797272;border-style:solid;border-width:2px;border-color:cyan">
-		<div style="height:10px;width:10%;background-color:#797272;margin-right:85%;text-align:left"><span style="color:#9C238B;text-transform:capitalize;font-size:22; font-family: "Courier New"><%=item.u_name%></span></div>
-		<div style="height:35px;width:30%;background-color:#797272;margin-right:65%;margin-top:19px;text-align:left"><span style="font-size:19"><%=item.B_name%></div>
-		<div style="height:224px;width:98%;background-color:C7B8B8;margin-top:4px"><span style="font-size:18"><%=item.B_body%><br></div>
+	<div style="height:300px;width:48%;background-color:#FFFFFF;border-style:solid;border-width:2px;border-color:cyan">
+		<div style="height:30px;width:100%;background-color:#FFFFFF;text-align:left"><span  style="margin-left:3px;color:red;text-transform:capitalize;font-size:22; font-family: "Courier New"><%=item.u_name%></span>
+		<% if (item.u_id==userid) { %>
+		<a href="#" style="color:red;margin-left:63%">delete</a> <a href="#" style="color:#079A07">Edit</a>
+		<% } %>
+		</div>
+		<div style="height:35px;width:100%;background-color:#FFFFFF;margin-top:5px;text-align:left"><span style="margin-left:8px;font-size:19"><%=item.B_name%></div>
+		<div style="height:218px;width:98%;background-color:#C7B8B8;margin-top:4px"><span style="font-size:18"><%=item.B_body%><br></div>
 		
 	</div>
 		
 	<br>
 	<% }); %>
 <% }else{ %>
-	<h1> You have No Posts Yet..</h1>
+	<h1>No Posts Yet..</h1>
 <%}%>	
 </body>
