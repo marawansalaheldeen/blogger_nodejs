@@ -1,10 +1,20 @@
 <% include ../partials/header %>	
 
-	<center><h1>All My Events</h1></center>		
+
+
+<div style="margin-left:300px;margin-top:80px">
+	<% iitems.forEach(function(item) { %>
+	<h5 style="color:blue">user-name  : <span style="color:red"><%=item.u_name%></h5><a href="/profil/<%=item.u_id%>" class="btn btn-danger" style="margin-left:600px">delete account</a><br>
+	<h5 style="color:blue">user email : <span style="color:red"><%=item.u_email%></h5><br>
+	<h5 style="color:blue">user id    : <span style="color:red"><%=item.u_id%></h5> 
+	<% }) %>		
+</div>		
+
 	<a id="my_Eve" href="<%=basurl%>/profil/MyEvents" style="margin-left:90px">My Events</a>
 	<a id="my_Blo" href="<%=basurl%>/profil/MyBlogs" style="margin-left:1000px">My Blogs</a>
 	<div class=""><br>
-	
+		<center><h1>All My Events</h1></center>		
+
 	<div class="col s12">
 		<% if(items.length > 0) { %>
 		<table class="table">	

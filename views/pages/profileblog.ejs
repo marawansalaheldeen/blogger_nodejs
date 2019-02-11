@@ -1,0 +1,37 @@
+<% include ../partials/header %>	
+<div style="margin-left:300px;margin-top:80px">
+	<% iitems.forEach(function(item) { %>
+	<h5 style="color:blue">user-name  : <span style="color:red"><%=item.u_name%></h5><a href="/profil/<%=item.u_id%>" class="btn btn-danger" style="margin-left:600px">delete account</a><br>
+	<h5 style="color:blue">user email : <span style="color:red"><%=item.u_email%></h5><br>
+	<h5 style="color:blue">user id    : <span style="color:red"><%=item.u_id%></h5> 
+	<% }) %>		
+</div>	
+
+		
+	<a id="my_Eve" href="<%=basurl%>/profil/MyEvents" style="margin-left:90px">My Events</a>
+	<a id="my_Blo" href="<%=basurl%>/profil/MyBlogs" style="margin-left:1000px">My Blogs</a>
+	<div class=""><br>
+	<center><h1>All My Blogs</h1></center>	
+<body>
+>
+	
+<% if(items.length > 0) { %>
+	<% items.forEach(function(item,index) { %>
+	<center>	
+	<div style="height:300px;width:48%;background-color:#FFFFFF;border-style:solid;border-width:2px;border-color:cyan">
+		<div style="height:30px;width:100%;background-color:#FFFFFF;text-align:left"><span  style="margin-left:3px;color:red;text-transform:capitalize;font-size:22; font-family: "Courier New"><%=item.u_name%></span>
+		<% if (item.u_id==userid) { %>
+		<a href="#" style="color:red;margin-left:63%">delete</a> <a href="#" style="color:#079A07">Edit</a>
+		<% } %>
+		</div>
+		<div style="height:35px;width:100%;background-color:#FFFFFF;margin-top:5px;text-align:left"><span style="margin-left:8px;font-size:19"><%=item.B_name%></div>
+		<div style="height:218px;width:98%;background-color:#C7B8B8;margin-top:4px"><span style="font-size:18"><%=item.B_body%><br></div>
+		
+	</div>
+		
+	<br>
+	<% }); %>
+<% }else{ %>
+	<h1>No Posts Yet..</h1>
+<%}%>	
+</body>

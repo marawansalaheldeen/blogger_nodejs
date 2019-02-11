@@ -79,8 +79,8 @@ passport.use(new LocalStrategy(function(username, password, done) {
 // Starting server
 // Starting server
 econtrol(app);
-var server = app.listen(3000,function(){
-	console.log('app listening on port 3000....');
+var server = app.listen(8000,function(){
+	console.log('app listening on port 8000....');
 })
 	
 

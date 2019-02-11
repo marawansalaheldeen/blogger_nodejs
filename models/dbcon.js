@@ -4,7 +4,7 @@ var mysql = require('mysql');
 
 const siteTitle = "Swastika";
 const brand = "Swastika";
-const baseurl = "http://localhost:3000";
+const baseurl = "http://localhost:8000";
 
 const connection = mysql.createConnection({
 	host:'Localhost',

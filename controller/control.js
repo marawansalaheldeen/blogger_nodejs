@@ -105,13 +105,29 @@ app.get('/profil',authenticationMiddleware,function(req,res){
 //});
 app.get('/profil/MyEvents',function(req,res){
 			connection.query("SELECT * FROM e_events WHERE u_id = ? ",[req.user.u_id],function(err,result){				
-					
-					res.render('pages/profileve',{
+						connection.query("SELECT * FROM users WHERE u_id = ?",[req.user.u_id],function(err,results){
+						res.render('pages/profileve',{
+						siteTitle : siteTitle,
+						pageTitle : "Swastika",
+						basurl	  : baseurl,
+						iitems    : results, 
+						items     : result
+						});
+				});
+			});
+});
+app.get('/profil/MyBlogs',function(req,res){
+			connection.query("SELECT * FROM blogs WHERE u_id = ? ",[req.user.u_id],function(err,result){				
+					connection.query("SELECT * FROM users WHERE u_id = ?",[req.user.u_id],function(err,results){
+					res.render('pages/profileblog',{
 					siteTitle : siteTitle,
 					pageTitle : "Swastika",
 					basurl	  : baseurl,
+					iitems    : results,
+					userid    : req.user.u_id,
 					items     : result
 					});
+				});	
 			});
 });
 //Logining in

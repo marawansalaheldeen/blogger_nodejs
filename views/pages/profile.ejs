@@ -2,9 +2,9 @@
 
 <div style="margin-left:300px;margin-top:80px">
 	<% items.forEach(function(item) { %>
-	<label> user-name  : <%=item.u_name%></label><a href="/profil/<%=item.u_id%>" class="btn btn-danger" style="margin-left:600px">delete account</a><br>
-	<label> user email : <%=item.u_email%></label><br>
-	<label> user id : <%=item.u_id%></label>
+	<h5 style="color:blue">user-name  : <span style="color:red"><%=item.u_name%></h5><a href="/profil/<%=item.u_id%>" class="btn btn-danger" style="margin-left:600px">delete account</a><br>
+	<h5 style="color:blue">user email : <span style="color:red"><%=item.u_email%></h5><br>
+	<h5 style="color:blue">user id    : <span style="color:red"><%=item.u_id%></h5> 
 	<% }) %>		
 </div>		
 			<a id="my_Eve" href="<%=basurl%>/profil/MyEvents" style="margin-left:90px">My Events</a>
